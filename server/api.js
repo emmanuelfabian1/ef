@@ -13,8 +13,8 @@ const ServerEvent = bizSdk.ServerEvent;
 const requestIp = require('request-ip');
 
 //const access_token = process.env.FACEBOOK_ACCESS_TOKEN;
-const pixel_id = 'PIXEL_ID';
-const api = bizSdk.FacebookAdsApi.init(access_token);
+const pixel_id = '460894108664758';
+//const api = bizSdk.FacebookAdsApi.init(access_token);
 
 var app = express();
 app.use(bodyParser.json());
@@ -28,33 +28,6 @@ router.post("*/submit", async (req, res) => {
 
 //Facebook Server Side Tracking Endpoint
 router.post("*/server-side-tracking", async (req, res) => {
-
-  let current_timestamp = Math.floor(new Date() / 1000);
-
-  const userData = (new UserData())
-    .setClientIpAddress(req.clientIp)
-    .setClientUserAgent(req.headers['user-agent'])
-
-  const serverEvent = (new ServerEvent())
-    .setEventName(req.body.eventName)
-    .setEventTime(current_timestamp)
-    .setUserData(userData)
-    .setEventSourceUrl(req.body.eventUrl)
-    .setActionSource('website')
-    .setEventId(req.body.eventId);
-
-  const eventsData = [serverEvent];
-  const eventRequest = (new EventRequest(access_token, pixel_id))
-    .setEvents(eventsData);
-
-  eventRequest.execute().then(
-    response => {
-      console.log('Response: ', response);
-    },
-    err => {
-      console.error('Error: ', err);
-    }
-  );
 });
 
 //Stripe Payment Endpoint
